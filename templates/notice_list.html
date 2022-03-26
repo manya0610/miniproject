@@ -1,0 +1,35 @@
+<!-- templates/notice_list.html -->
+{% extends 'base.html' %}
+{% block title %}notices{% endblock title %}
+{% block content %}
+{% for notice in object_list %}
+<div class="card">
+<div class="card-header">
+<a href="{% url 'notice_detail' notice.pk %}"><span class="font-weight-bold">{{ notice.title }}</span> &middot;</a>
+<span class="text-muted">by  {{ notice.author  }}|
+{{ notice.date }}</span>
+</div>
+<div class="card-body">
+{{ notice.body }}
+    {% if user.is_superuser or user.is_stuff or notice.author == user   %}
+        <div>
+            <a href="{% url 'notice_edit' notice.pk %}">Edit</a> |
+            <a href="{% url 'notice_delete' notice.pk %}">Delete</a>
+        </div>
+    {% endif  %}
+</div>
+<div class="card-footer">
+    {% for comment in notice.comments.all%}
+    <p>
+        <span class="font-weight-bold">
+            {{comment.author}}&middot;
+        </span>
+        {{comment}}
+        </p>
+    {%endfor%}
+</div>
+</div>
+    
+<br />
+{% endfor %}
+{% endblock content %}

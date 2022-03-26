@@ -1,0 +1,35 @@
+<!-- templates/notice_detail.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="notice-entry">
+<h2>{{ notice.title }}</h2>
+<p>by {{ notice.author }} | {{ notice.date }}</p>
+<p>{{ notice.body }}</p>
+</div>
+<p><a href="{% url 'notice_edit' notice.pk %}">Edit</a> |
+<a href="{% url 'notice_delete' notice.pk %}">Delete</a></p>
+<p>Back to <a href="{% url 'notice_list' %}">All notices</a>.</p>
+<P>add a comment</P>
+<div>
+    <form method="POST">{%csrf_token%}
+        {{ form.as_p }}
+        <div class="d-gridgap-2">
+            <button class="btn btn-success mt-3">submit</button>
+        </div>
+
+    </form>
+</div>
+{% for comment in comments %}
+    <div class="row justify-content-center mt-3 mb-5 border-bottom">
+        <div class="col-md-5 col-sm-12">
+            <p>
+                <strong>{{ comment.author }} </strong>
+                {% if request.user == comment.author %}
+                <a href="{% url 'comment_delete' notice.pk comment.pk %}" style="color: rgb(253, 0, 0);">delete</a>
+                {% endif %}
+            </p>
+            <p>{{ comment.comment }}</p>
+        </div>
+    </div>
+    {% endfor %}
+{% endblock content %}

@@ -1,0 +1,18 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+{% block title %}Home{% endblock title %}
+{% block content %}
+<br/>
+<div class="jumbotron">
+<h1 class="display-4">Housing Society  Portal</h1>
+<p class="lead">A Newspaper website built with Django.</p>
+<p class="lead">
+<a class="btn btn-primary btn-lg" href="{% url 'article_list' %}"
+role="button">View All Complaints</a>
+<a class="btn btn-primary btn-lg" href="{% url 'notice_list' %}"
+role="button">View All notices</a>
+<a class="btn btn-primary btn-lg" href="{% url 'building_list' %}"
+role="button">View All buildings</a>
+</p>
+</div>
+{% endblock content %}

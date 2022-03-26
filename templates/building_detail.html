@@ -1,0 +1,37 @@
+<!-- templates/building_detail.html -->
+{% extends 'base.html' %}
+{% block content %}
+<div class="building-entry">
+<h2>{{ object.name }}</h2>
+</div>
+<p><a href="{% url 'building_edit' building.pk %}">Edit</a> |
+    <a href="{% url 'building_delete' building.pk %}">Delete</a></p>
+    <p>Back to <a href="{% url 'building_list' %}">All buildings</a>.</p>
+
+    <P>add a apartment</P>
+    <div>
+        <form method="POST">{%csrf_token%}
+            {{ form.as_p }}
+            <div class="d-gridgap-2">
+                <button class="btn btn-success mt-3">submit</button>
+            </div>
+    
+        </form>
+    </div>
+    {% for apartment in apartments %}
+        <div class="row justify-content-center mt-3 mb-5 border-bottom">
+            <div class="col-md-5 col-sm-12">
+                <p>
+                    <strong>{{ apartment.owner }} </strong>
+                    <strong>{{ apartment.apartmentnumber }} </strong>
+                    <strong>{{ apartment.building }} </strong>
+                    <strong>{{ apartment.rentstatus }} </strong>
+                    {% if user.is_superuser %}
+                    <a href="{% url 'apartment_delete' building.pk apartment.pk %}" style="color: #333;">delete</a>
+                    {% endif %}
+                </p>
+                <p>{{ apartment.apartmentno }}</p>
+            </div>
+        </div>
+        {% endfor %}
+{% endblock content %}
